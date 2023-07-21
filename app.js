@@ -3,7 +3,7 @@ const btnAnterior = document.getElementById('btnAnterior');
 const btnSiguiente = document.getElementById('btnSiguiente');
 
 btnSiguiente.addEventListener('click', () => {
-	if(pagina < 1000){
+	if(pagina < 25){
 		pagina += 1;
 		cargarPeliculas();
 	}
@@ -28,14 +28,16 @@ const cargarPeliculas = async() => {
 			
 			let peliculas = '';
 			datos.results.forEach(pelicula => {
-				peliculas += `
-					<div class="pelicula">
-						<img class="poster" src="https://image.tmdb.org/t/p/w500/${pelicula.poster_path}">
-						<h4 class="titulo">${pelicula.title}</h4>
-						<h4 class="titulo">${pelicula.release_date}</h4>
-						
-					</div>
-				`;
+				// Verificar si la película tiene un póster disponible
+				if (pelicula.poster_path !== null) {
+					peliculas += `
+						<div class="pelicula">
+							<img class="poster" src="https://image.tmdb.org/t/p/w500/${pelicula.poster_path}">
+							<h4 class="titulo">${pelicula.title}</h4>
+							<h4 class="titulo">${pelicula.release_date}</h4>
+						</div>
+					`;
+				}
 			});
 
 			document.getElementById('contenedor').innerHTML = peliculas;
